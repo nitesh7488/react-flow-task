@@ -1,38 +1,155 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app {
   display: flex;
-  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+  width: 200px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.2rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.canvas {
+  flex-grow: 1;
+  background: #fafafa;
+}
+
+.draggable-block {
+  padding: 12px;
+  margin: 12px 0;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: grab;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.draggable-block:hover {
+  background: #f1f1f1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.draggable-block.block-a {
+  background: #ff6b6b;
+  color: white;
+  border-color: #ff5252;
+}
+
+.draggable-block.block-b {
+  background: #4ecdc4;
+  color: white;
+  border-color: #3dbeb6;
+}
+
+/* Node Styles */
+.block-a, .block-b {
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: none;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 8px;
+}
+
+.block-a {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.block-b {
+  background: linear-gradient(135deg, #4ecdc4, #66d8cf);
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.block-icon {
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Handle Styles */
+.connection-handle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  position: absolute;
+}
+
+.block-a .connection-handle {
+  background: #ff6b6b;
+  right: -6px;
+}
+
+.block-b .connection-handle {
+  background: #4ecdc4;
+  left: -6px;
+}
+
+.connection-handle:hover {
+  transform: scale(1.2);
+  transition: transform 0.1s ease;
+}
+
+/* Edge/Connection Styles */
+.react-flow__edge-path {
+  stroke: #888;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #555;
+  stroke-width: 3;
+}
+
+.react-flow__edge .react-flow__edge-text {
+  font-size: 12px;
+}
+
+/* Context Menu Styles */
+.react-contextmenu {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  padding: 6px 0;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.react-contextmenu-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  transition: background 0.2s ease;
+}
+
+.react-contextmenu-item:hover {
+  background: #f0f7ff;
+  color: #0066cc;
 }

@@ -1,14 +1,34 @@
-import React, { useState, useCallback } from 'react';
-import { useNodesState, useEdgesState ,addEdge, MarkerType } from 'reactflow';
-import BlockPanel from './components/BlockPanel';
-import FlowCanvas from './components/FlowCanvas';
-import NodeContextMenu from './components/NodeContextMenu';
-import './App.css';
+import React, { useState,useCallback } from 'react';
+import ReactFlow, {
+  addEdge,
+  Background,
+  Controls,
+  MarkerType,
+  useNodesState,
+  useEdgesState
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+import BlockA from './BlockA';
+import BlockB from './BlockB';
 
-function App() {
+const nodeTypes = {
+  blockA: BlockA,
+  blockB: BlockB
+};
+
+const FlowCanvas = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
+  const isValidConnection = useCallback(
+    (connection) => {
+      const sourceNode = nodes.find((node) => node.id === connection.source);
+      const targetNode = nodes.find((node) => node.id === connection.target);
+      return sourceNode?.type === 'blockA' && targetNode?.type === 'blockB';
+    },
+    [nodes]
+  );
 
   const onConnect = useCallback(
     (params) => {
@@ -59,9 +79,8 @@ function App() {
   );
 
   return (
-    <div className="app">
-      <BlockPanel />
-      <FlowCanvas
+    <div className="canvas">
+      <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -70,10 +89,15 @@ function App() {
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
-      />
-      <NodeContextMenu />
+        nodeTypes={nodeTypes}
+        isValidConnection={isValidConnection}
+        fitView
+      >
+        <Background />
+        <Controls />
+      </ReactFlow>
     </div>
   );
-}
+};
 
-export default App;
+export default FlowCanvas;
