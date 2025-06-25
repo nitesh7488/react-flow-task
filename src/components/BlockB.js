@@ -1,20 +1,34 @@
 import React from 'react';
 import { Handle, Position } from 'reactflow';
-import { ContextMenuTrigger } from 'react-contextmenu';
+import { useContextMenu } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.css';
 
-const BlockB = ({ data }) => (
-  <ContextMenuTrigger id="node-context-menu" collect={() => ({ nodeId: data.id })}>
-    <div className="block-b">
-      <div className="block-icon">B</div>
-      {data.label}
-      <Handle
-        type="target"
-        position={Position.Left}
-        id="b-input"
-        className="connection-handle"
-      />
-    </div>
-  </ContextMenuTrigger>
-);
+const MENU_ID = 'node-context-menu';
+
+const BlockB = ({ data }) => {
+  const { show } = useContextMenu({
+    id: MENU_ID,
+  });
+
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+    show(event, { props: { nodeId: data.id } });
+  };
+
+  return (
+    <>
+      <div className="block-b" onContextMenu={handleContextMenu}>
+        <div className="block-icon">B</div>
+        {data.label}
+        <Handle
+          type="target"
+          position={Position.Left}
+          id="b-input"
+          className="connection-handle"
+        />
+      </div>
+    </>
+  );
+};
 
 export default BlockB;
