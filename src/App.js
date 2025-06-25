@@ -4,6 +4,7 @@ import BlockPanel from './components/BlockPanel';
 import FlowCanvas from './components/FlowCanvas';
 import NodeContextMenu from './components/NodeContextMenu';
 import './App.css';
+import 'react-contexify/dist/ReactContexify.css';
 
 function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);

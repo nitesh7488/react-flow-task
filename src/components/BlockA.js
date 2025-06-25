@@ -1,18 +1,19 @@
 import React from 'react';
 import { Handle, Position } from 'reactflow';
-import { useContextMenu } from 'react-contexify';
+import { contextMenu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
 const MENU_ID = 'node-context-menu';
 
 const BlockA = ({ data }) => {
-  const { show } = useContextMenu({
-    id: MENU_ID,
-  });
-
   const handleContextMenu = (event) => {
     event.preventDefault();
-    show(event, { props: { nodeId: data.id } });
+    console.log('handleContextMenu event:', event);
+    contextMenu.show({
+      id: MENU_ID,
+      event,
+      props: { nodeId: data.id },
+    });
   };
 
   return (
